@@ -1,0 +1,47 @@
+{
+  "id": 3,
+  "title": "Sparse Matrices",
+  "definition": "A sparse matrix is a matrix in which most of the elements are zero. Storing such matrices using a standard 2D array wastes memory. Sparse matrix representation stores only the non-zero elements.",
+  "conceptExplanation": "In a sparse matrix, most elements are zero. Instead of storing all m×n elements, we store only the non-zero elements along with their row and column indices. Common representations include: 1) Triplet representation (3 arrays: row, column, value), 2) Linked list representation, 3) Hash mapping.",
+  "keyPoints": "- Most elements are zero - Special storage needed - Three triplet representation - Linked list representation - Hash mapping",
+  "importantTerminology": "Sparse matrix, Dense matrix, Triplet representation, Row, Column, Value, Non-zero element",
+  "workingPrinciple": "The triplet representation stores only non-zero elements as (row, column, value) tuples. For an m×n matrix with s non-zero elements, we store s triplets instead of m×n elements. Linked list representation uses a node structure with row, column, value, and next pointer.",
+  "realLifeExample": "Scientific computing, matrices in machine learning, graph adjacency matrices, network analysis",
+  "dsaExample": "Adding two sparse matrices, transposing a sparse matrix, storing a large matrix with few non-zero values efficiently",
+  "diagram": "Triplet representation: [[0,0,5], [1,2,3], [2,1,7]] representing matrix [[5,0,0],[0,0,3],[0,7,0]]",
+  "algorithm": "Sparse Matrix Addition:\n1. Read triplets of both matrices\n2. Compare row and column indices\n3. If same, add values and store result\n4. If different, store the smaller index first\n5. Continue until all triplets processed\n6. Output resultant triplet array",
+  "pseudocode": "BEGIN\n  READ s1, s2 (number of non-zero elements)\n  i = 1; j = 1; k = 1\n  WHILE i <= s1 AND j <= s2\n    IF A[i].row < B[j].row\n      C[k] = A[i]; i = i + 1\n    ELSE IF A[i].row > B[j].row\n      C[k] = B[j]; j = j + 1\n    ELSE\n      IF A[i].col < B[j].col\n        C[k] = A[i]; i = i + 1\n      ELSE IF A[i].col > B[j].col\n        C[k] = B[j]; j = j + 1\n      ELSE\n        C[k].value = A[i].value + B[j].value\n        C[k] = A[i]; i = i + 1; j = j + 1\n      END IF\n    END IF\n    k = k + 1\n  END WHILE\n  // Copy remaining elements\\n  WHILE i <= s1\n    C[k] = A[i]; i = i + 1; k = k + 1\n  END WHILE\n  WHILE j <= s2\n    C[k] = B[j]; j = j + 1; k = k + 1\n  END WHILE\n  PRINT C\nEND",
+  "jsCode": "// Triplet representation of sparse matrix\\nconst matrixA = [\n  [0, 0, 5],  // row, col, value\n  [1, 2, 3],\n  [2, 1, 7]\n];\n\\nconst matrixB = [\n  [0, 0, 2],\n  [1, 2, 4],\n  [2, 1, 6]\n];\n\\n// Add two sparse matrices\\nfunction addSparseMatrices(A, B) {\n  const result = [];\n  let i = 0, j = 0;\n  \n  while (i < A.length && j < B.length) {\n    if (A[i][0] < B[j][0]) {\n      result.push(A[i]);\n      i++;\n    } else if (A[i][0] > B[j][0]) {\n      result.push(B[j]);\n      j++;\n    } else {\n      if (A[i][1] < B[j][1]) {\n        result.push(A[i]);\n        i++;\n      } else if (A[i][1] > B[j][1]) {\n        result.push(B[j]);\n        j++;\n      } else {\n        result.push([A[i][0], A[i][1], A[i][2] + B[j][2]]);\n        i++;\n        j++;\n      }\n    }\n  }\n  \n  // Copy remaining elements from A\n  while (i < A.length) {\n    result.push(A[i]);\n    i++;\n  }\n  \n  // Copy remaining elements from B\n  while (j < B.length) {\n    result.push(B[j]);\n    j++;\n  }\n  \n  return result;\n}\n\\nconst result = addSparseMatrices(matrixA, matrixB);\\nconsole.log('Result:', result); // [[0,0,7],[1,2,7],[2,1,13]]\n\n// Linked list node for sparse matrix\\nclass SparseMatrixNode {\n  constructor(row, col, value) {\n    this.row = row;\n    this.col = col;\n    this.value = value;\n    this.next = null;\n  }\n}\n",
+  "complexity": "Time: Addition O(s1 + s2) where s1, s2 are non-zero elements\\nSpace: O(s) for storing s non-zero elements\nCompared to O(m×n) for standard representation",
+  "applications": "Scientific computing, finite element method, graph algorithms, machine learning sparse data",
+  "advantages": "Memory efficient for matrices with few non-zero elements\\nFaster operations on sparse data\\nReduces storage from m×n to s (where s << m×n)",
+  "limitations": "Overhead for matrices that are not sparse\\nComplexity in accessing specific elements\\nNot suitable for dense matrix operations",
+  "commonMistakes": "Forgetting to handle remaining triplets after main loop\\nIncorrect index comparison in addition\\nNot maintaining sorted order of triplets",
+  "importantExamPoints": "Triplet vs linked list representation\\nAddition, transpose, and fast transpose algorithms\\nComparison with dense matrix storage\\nWhen to use sparse representation (s << m×n)",
+  "twoMarkQuestions": [
+    "Define sparse matrix.",
+    "What is triplet representation?",
+    "When is a matrix considered sparse?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain sparse matrix representation and addition algorithm.",
+      "answer": "A sparse matrix has most elements as zero. Instead of storing all m×n elements, we store only non-zero elements. Triplet representation uses three arrays/rows: row[], col[], value[] for s non-zero elements. Addition algorithm compares row and column indices of two matrices' triplets: if rows differ, smaller row goes first; if same row, compare columns; if same position, add values. Remaining triplets are copied directly. Result maintains sorted order. This reduces storage from m×n to O(s) where s is number of non-zero elements."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain sparse matrix representations and operations in detail.",
+      "answer": "Sparse matrix storage techniques:\n\n1. Triplet Representation: Stores (row, column, value) for each non-zero element in sorted order. Simple but requires sorting.\n\n2. Linked List Representation: Each node contains row, column, value, and next pointer. Allows dynamic operations.\n\n3. Hash Mapping: Uses (row, col) as key and value as data. Provides O(1) access.\n\nOperations:\n- Addition: Compare triplets row/column-wise, add values at same positions, maintain sorted order. Complexity: O(s1 + s2).\n- Transpose: Convert A[m][n] to A[n][m] by swapping row and column indices. Can be done in O(s) using auxiliary array.\n- Fast Transpose: More efficient O(m+n+s) algorithm using row pointer technique.\n\nApplications: Solving large systems where matrices are sparse (scientific computing, FEM), graph adjacency matrices, machine learning (sparse features).\n\nComparison: Triplet is simple, linked list allows dynamic operations, hash mapping provides fast access."
+    }
+  ],
+  "mcqs": [
+    { "question": "A sparse matrix is one in which most elements are?", "options": ["Zero", "Non-zero", "Positive", "Negative"], "answer": "Zero" },
+    { "question": "Triplet representation stores (row, col, value) for each non-zero element. Its complexity for addition is?", "options": ["O(m×n)", "O(s1 + s2)", "O(log n)", "O(s^2)"], "answer": "O(s1 + s2)" }
+  ],
+  "practiceQuestions": [
+    "Given sparse matrix A with triplets [[0,0,5],[1,2,3],[2,1,7]] and B with [[0,0,2],[1,2,4],[2,1,6]], find A+B.",
+    "Write an algorithm to transpose a sparse matrix using triplet representation.",
+    "Implement fast transpose of a sparse matrix."
+  ]
+}

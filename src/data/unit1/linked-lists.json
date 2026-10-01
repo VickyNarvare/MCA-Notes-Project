@@ -1,0 +1,47 @@
+{
+  "id": 2,
+  "title": "Linked Lists",
+  "definition": "A linked list is a linear data structure where elements are not stored at contiguous memory locations. Each element (node) contains a data field and a reference (link) to the next node in the sequence.",
+  "conceptExplanation": "Linked lists solve the fixed-size limitation of arrays. Each node contains data and a pointer to the next node. This allows dynamic size and efficient insertion/deletion, but does not support random access.",
+  "keyPoints": "- Nodes contain data and next pointer - Dynamic size - No random access - Insertion/deletion at any position is O(1) if pointer is known",
+  "importantTerminology": "Node, Head, Next, Null, Pointer, Traversal, Insertion, Deletion",
+  "workingPrinciple": "Each node has two fields: data and next. The next field points to the next node. The last node points to null. Traversal starts from head and follows next pointers until null.",
+  "realLifeExample": "Music playlist, undo/redo functionality in editors, dynamic memory allocation",
+  "dsaExample": "Inserting a node at the beginning, deleting a node at a given position, reversing a linked list",
+  "diagram": "Singly Linked List: Head → [Data|Next] → [Data|Next] → [Data|Next] → NULL",
+  "algorithm": "Linked List Traversal:\n1. Set current = head\n2. While current != null:\n   - Process current.data\n   - Move current = current.next\n3. End while",
+  "pseudocode": "BEGIN\n  SET current = head\n  WHILE current != NULL\n    PROCESS current.data\n    SET current = current.next\n  END WHILE\nEND",
+  "jsCode": "// Node class\\nclass Node {\\n  constructor(data) {\\n    this.data = data;\\n    this.next = null;\n  }\n}\\n\\n// Linked List class\\nclass LinkedList {\\n  constructor() {\\n    this.head = null;\n  }\n  \\n  // Insert at the beginning\\n  insertAtBeginning(data) {\\n    const newNode = new Node(data);\\n    newNode.next = this.head;\\n    this.head = newNode;\\n  }\n  \\n  // Delete a node by key\\n  deleteByKey(key) {\\n    let current = this.head;\n    let previous = null;\n    \\n    // If head itself holds the key\\n    if (current !== null && current.data === key) {\\n      this.head = current.next;\\n      return;\\n    }\n    \\n    // Search for the key to be deleted\\n    while (current !== null && current.data !== key) {\\n      previous = current;\n      current = current.next;\n    }\n    \\n    // If key was not present\\n    if (current === null) return;\n    \\n    // Unlink the node from linked list\\n    previous.next = current.next;\n  }\n  \\n  // Display the list\\n  display() {\\n    let current = this.head;\n    let result = '';\n    while (current !== null) {\\n      result += current.data + ' -> ';\n      current = current.next;\\n    }\\n    result += 'NULL';\n    console.log(result);\\n  }\n}\n\\n// Example usage\\nconst list = new LinkedList();\\nlist.insertAtBeginning(10);\\nlist.insertAtBeginning(20);\\nlist.insertAtBeginning(30);\\nlist.display(); \\n// Output: 30 -> 20 -> 10 -> NULL\\nlist.deleteByKey(20);\\nlist.display(); \\n// Output: 30 -> 10 -> NULL",
+  "complexity": "Time: Access O(n), Insertion at beginning O(1), Deletion by key O(n), Search O(n)\\nSpace: O(n) for n nodes",
+  "applications": "Dynamic memory allocation, playlist management, hash table collision resolution, stack/queue implementation",
+  "advantages": "Dynamic size, efficient insertion/deletion no need to shift elements, memory efficiency",
+  "limitations": "No random access, extra memory for pointers, sequential access only",
+  "commonMistakes": "Losing the head reference, not setting next to null, memory leaks from circular references",
+  "importantExamPoints": "Difference between singly, doubly, and circular linked lists, node structure, traversal algorithms, time complexity comparison with arrays",
+  "twoMarkQuestions": [
+    "Define linked list.",
+    "What is a node in a linked list?",
+    "What is the time complexity of inserting at the beginning of a linked list?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain singly linked list with its operations and complexity.",
+      "answer": "A singly linked list consists of nodes where each node has a data field and a next pointer pointing to the next node. The last node points to null. Operations include: - Insertion at beginning/end/given position - Deletion by key/position - Traversal - Search. Insertion/deletion at beginning is O(1), at end/given position is O(n) without tail pointer, O(1) with tail pointer. Search and deletion by key are O(n). Advantages: dynamic size, no need to shift elements. Disadvantages: no random access, extra memory for pointers."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain singly linked list with all operations, algorithms, and applications in detail.",
+      "answer": "A singly linked list is a linear data structure composed of nodes. Each node contains data and a reference (link) to the next node in the sequence. The first node is called the head, and the last node points to null. \n\nOperations:\n- Traversal: Start from head, follow next pointers until null. Time: O(n).\n- Insertion at beginning: Create new node, set its next to head, update head. Time: O(1).\n- Insertion at end: If tail pointer exists, O(1); otherwise traverse to end O(n).\n- Deletion by key: Search for node, update previous.next to skip the node. Time: O(n).\n- Search: Compare each node's data with target. Time: O(n).\n\nApplications: Dynamic memory allocation, implementing stacks/queues, hash table chaining, polynomial representation.\n\nComparison with arrays: Arrays provide O(1) random access but O(n) insertion/deletion. Linked lists provide O(1) insertion/deletion (at known position) but O(n) access.\n\nMemory representation: Each node is dynamically allocated. The head pointer stores the address of the first node. Free memory management requires proper deletion to avoid memory leaks."
+    }
+  ],
+  "mcqs": [
+    { "question": "The time complexity of inserting a node at the beginning of a linked list is?", "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"], "answer": "O(1)" },
+    { "question": "Which of the following is not a property of a linked list?", "options": ["Dynamic size", "Random access", "Easy insertion/deletion", "Memory efficient for sparse data"], "answer": "Random access" }
+  ],
+  "practiceQuestions": [
+    "Create a singly linked list and insert elements 10, 20, 30 at the beginning. Display the list.",
+    "Given a linked list 1->2->3->4->5, write code to reverse it.",
+    "Write a function to detect if a linked list has a loop/cycle."
+  ]
+}

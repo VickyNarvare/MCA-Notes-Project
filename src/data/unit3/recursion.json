@@ -1,0 +1,47 @@
+{
+  "id": 1,
+  "title": "Introduction to Recursion",
+  "definition": "Recursion is a process where a function calls itself directly or indirectly. The corresponding function is called a recursive function. A recursive problem must have a base case that stops the recursion and a recursive case that moves toward the base case.",
+  "conceptExplanation": "Recursion solves problems by breaking them down into smaller instances of the same problem. Each recursive call creates a new frame on the call stack. The base case is essential to prevent infinite recursion and stack overflow. Recursion can be direct (function calls itself) or indirect (function A calls B, B calls A).",
+  "keyPoints": "- Base case to stop recursion - Recursive case that progresses toward base - Call stack manages recursive calls - Stack overflow if base case missing",
+  "importantTerminology": "Recursion, Base Case, Recursive Case, Call Stack, Stack Frame, Direct Recursion, Indirect Recursion",
+  "workingPrinciple": "When a recursive function is called, a new stack frame is created with its own local variables and parameters. The function continues to call itself until the base case is reached. Then, the stack unwinds, and each returning call produces its result. Each recursive call adds a frame to the call stack, and when the base case is reached, the stack unwinds returning values back up the chain.",
+  "realLifeExample": "Fractal generation, tree traversal, factorial calculation, Fibonacci series, quick sort merge sort implementations",
+  "dsaExample": "Factorial calculation, Fibonacci series, Tower of Hanoi, tree traversals (inorder, preorder, postorder), DFS in graphs",
+  "diagram": "Recursion call stack for factorial(3): factorial(3) → factorial(2) → factorial(1) [base case] → return 1 → return 2 → return 6",
+  "algorithm": "Recursive Function Structure:\n1. Check base case condition\n2. If base case true, return base value\n3. Else, make recursive call with smaller input\n4. Return result of recursive call combined with current state\n\nExample: Factorial(n)\n- Base case: if n <= 1, return 1\n- Recursive case: return n * factorial(n-1)",
+  "pseudocode": "BEGIN\n  // Factorial recursive\\n  FUNCTION factorial(n)\n    IF n <= 1\n      RETURN 1\n    ELSE\n      RETURN n * factorial(n - 1)\n    END IF\n  END FUNCTION\n\n  // Fibonacci recursive\\n  FUNCTION fibonacci(n)\n    IF n <= 1\n      RETURN n\n    ELSE\n      RETURN fibonacci(n - 1) + fibonacci(n - 2)\n    END IF\n  END FUNCTION\nEND",
+  "jsCode": "// Recursive factorial\\nfunction factorial(n) {\\n  if (n <= 1) {\\n    return 1;\\n  }\\n  return n * factorial(n - 1);\\n}\n\\n// Recursive Fibonacci\\nfunction fibonacci(n) {\\n  if (n <= 1) {\\n    return n;\\n  }\\n  return fibonacci(n - 1) + fibonacci(n - 2);\\n}\n\\n// Example usage\\nconsole.log('factorial(5):', factorial(5)); \\n// 120\\nconsole.log('fibonacci(6):', fibonacci(6)); \\n// 8\\n\\n// Tower of Hanoi\\nfunction towerOfHanoi(n, fromRod, toRod, auxRod) {\\n  if (n === 1) {\\n    console.log('Move disk 1 from ' + fromRod + ' to ' + toRod);\\n    return;\\n  }\\n  towerOfHanoi(n - 1, fromRod, auxRod, toRod);\\n  console.log('Move disk ' + n + ' from ' + fromRod + ' to ' + toRod);\\n  towerOfHanoi(n - 1, auxRod, toRod, fromRod);\\n}\n\\n// Example\\ntowerOfHanoi(3, 'A', 'C', 'B'); \\n// Moves 3 disks from A to C using B",
+  "complexity": "Time: Varies by problem - can be O(log n) to O(n!) or worse\\nSpace: O(d) where d is recursion depth (call stack height)\nNote: Recursive Fibonacci is O(2^n), optimized with memoization is O(n)",
+  "applications": "Fractal generation, tree/graph traversals, divide and conquer algorithms, backtracking, dynamic programming, parsing",
+  "advantages": "Simpler code for complex problems, elegant solution for divide-and-conquer, natural fit for recursive data structures (trees, lists)",
+  "limitations": "Overhead of function calls, risk of stack overflow, can be less efficient than iterative solutions, harder to debug",
+  "commonMistakes": "Missing base case causing infinite recursion, incorrect progress toward base case, excessive recursion depth, not considering iterative alternative",
+  "importantExamPoints": "Difference between direct and indirect recursion, base case necessity, time/space complexity of recursive vs iterative, call stack mechanism, tail recursion",
+  "twoMarkQuestions": [
+    "Define recursion.",
+    "What is a base case?",
+    "What is the time complexity of recursive factorial?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain recursion with base case, recursive case, and call stack.",
+      "answer": "Recursion is a method where a function calls itself directly or indirectly. Key components: 1) Base case: The condition that stops recursion (returns a value without further recursive call). 2) Recursive case: The part that calls the function with a smaller input, progressing toward the base case. \n\nCall Stack Mechanism: Each recursive call creates a new stack frame storing the function's local variables and parameters. When the base case is reached, the stack begins unwinding. Each returning call resolves and passes its result to the previous call. \n\nExample: Factorial(5) creates frames: factorial(5), factorial(4), factorial(3), factorial(2), factorial(1)[base]. factorial(1) returns 1. factorial(2) returns 2*1=2. factorial(3) returns 3*2=6. factorial(4) returns 4*6=24. factorial(5) returns 5*24=120.\n\nRecursion vs Iteration: Recursion is often simpler and more expressive (especially for trees/divide-and-conquer) but has function call overhead and stack overflow risk. Iteration is more memory-efficient but may require more complex code for certain problems."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain recursion with call stack mechanism, base case, recursive case, and compare recursive vs iterative approaches.",
+      "answer": "Recursion is a fundamental programming technique where a function calls itself. \n\nStructure:\n1. Base Case: Condition that stops recursion (returns direct value). Essential to prevent infinite recursion and stack overflow.\n2. Recursive Case: Function calls itself with modified argument, moving toward base case.\n\nCall Stack Mechanism:\n- Each call creates a stack frame with parameters, local variables, return address\n- Stack grows with each recursive call\n- Base case frame is the first to start unwinding\n- Results propagate back up through returning frames\n\nRecursive vs Iterative:\n- Recursion: More elegant, easier for divide-and-conquer, tree traversal, backtracking. Overhead: function call cost, stack depth limit (e.g., 10000 in JS). Example: Fibonacci O(2^n) without memoization.\n- Iteration: No function call overhead, no stack limit, often faster. May require more code for complex problems. Example: Fibonacci O(n) iterative.\n\nExamples:\n- Factorial: Recursive n*factorial(n-1), Iterative with loop\n- Fibonacci: Recursive fib(n-1)+fib(n-2) exponential, Iterative O(n)\n- Tree Traversal: Recursion natural, Iteration requires explicit stack\n\nTail Recursion: Recursive call is the last operation. Some languages optimize this to avoid stack growth. JavaScript does not guarantee tail call optimization."
+    }
+  ],
+  "mcqs": [
+    { "question": "Recursion is a process where a function calls itself. This is called?", "options": ["Direct recursion", "Indirect recursion", "Both A and B", "None of the above"], "answer": "Both A and B" },
+    { "question": "The condition that stops recursion is called?", "options": ["Base case", "Recursive case", "Terminating case", "Stop case"], "answer": "Base case" }
+  ],
+  "practiceQuestions": [
+    "Write a recursive function to calculate nth Fibonacci number.",
+    "Write a recursive function to solve Tower of Hanoi with 4 disks.",
+    "Convert iterative factorial to recursive and vice versa."
+  ]
+}

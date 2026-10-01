@@ -1,0 +1,47 @@
+{
+  "id": 4,
+  "title": "Selection Sort",
+  "definition": "Selection Sort is an in-place comparison sorting algorithm that divides the input array into two parts: the subarray of already sorted elements (built up from left to right) and the subarray of remaining unsorted elements. It repeatedly selects the smallest (or largest) element from the unsorted subarray and moves it to the sorted subarray.",
+  "conceptExplanation": "Selection Sort works by finding the minimum element in the unsorted portion of the array and swapping it with the element at the current position. The algorithm maintains two subarrays: sorted (left side) and unsorted (right side). In each iteration, the minimum element from the unsorted subarray is selected and swapped with the leftmost unsorted element, expanding the sorted subarray by one element.",
+  "keyPoints": "- In-place comparison sort - Divides array into sorted and unsorted - Selects minimum element each pass - O(n²) time complexity - Not stable by default",
+  "importantTerminology": "Selection Sort, In-place, Swap, Sorted subarray, Unsorted subarray",
+  "workingPrinciple": "The algorithm iterates n-1 times. In iteration i, it finds the minimum element in arr[i..n-1] and swaps it with arr[i]. After each iteration, the sorted subarray arr[0..i] grows by one element. The last element is automatically in place after n-1 iterations. Only one swap occurs per pass, unlike bubble sort which may swap multiple times.",
+  "realLifeExample": "Sorting a small selection of items, educational purposes",
+  "dsaExample": "Sorting array [64, 25, 12, 22, 11]: Find min 11, swap with arr[0] → [11, 25, 12, 22, 64], Find min 12, swap with arr[1] → [11, 12, 25, 22, 64], Find min 22, swap with arr[2] → [11, 12, 22, 25, 64], Find min 25, swap with arr[3] → [11, 12, 22, 25, 64] sorted",
+  "diagram": "Selection sort passes: [64,25,12,22,11] → find min 11 → swap with 64 → [11,25,12,22,64] → find min 12 → swap with 25 → [11,12,25,22,64] → find min 22 → swap with 25 → [11,12,22,25,64] → find min 25 → no swap needed → sorted",
+  "algorithm": "Selection Sort Algorithm:\n1. FOR i = 0 to n-1\n2.   SET min_index = i\n3.   FOR j = i+1 to n\n4.     IF arr[j] < arr[min_index]\n5.       SET min_index = j\n6.     END IF\n7.   END FOR\n8.   SWAP arr[i], arr[min_index]\n9. END FOR\n\nAfter each pass i, the smallest element from unsorted subarray moves to position i.",
+  "pseudocode": "BEGIN\n  SET n = length(arr)\n  FOR i = 0 TO n-1\n    SET min_index = i\n    FOR j = i+1 TO n\n      IF arr[j] < arr[min_index]\n        SET min_index = j\n      END IF\n    END FOR\n    SWAP arr[i] WITH arr[min_index]\n  END FOR\nEND",
+  "jsCode": "// Selection Sort implementation\\nfunction selectionSort(arr) {\\n  const n = arr.length;\n  \\n  for (let i = 0; i < n - 1; i++) {\\n    let min_index = i;\n    \\n    for (let j = i + 1; j < n; j++) {\\n      if (arr[j] < arr[min_index]) {\n        min_index = j;\n      }\\n    }\\n    \\n    if (min_index !== i) {\\n      [arr[i], arr[min_index]] = [arr[min_index], arr[i]];\\n    }\\n  }\\n  \\n  return arr;\n}\n\\n// Example usage\\nconst arr = [64, 25, 12, 22, 11, 22, 11];\\nconsole.log('Original:', arr);\\nselectionSort(arr);\\nconsole.log('Sorted:', arr); \\n// [11, 11, 12, 22, 25, 64]",
+  "complexity": "Time: Always O(n²) - Best, average, and worst case are the same\\nSpace: O(1) - in-place sort\nOnly one swap per pass, unlike bubble sort",
+  "applications": "Educational purposes, when memory write operation is costly (only n-1 swaps total)",
+  "advantages": "Simple to implement, no extra memory required, minimizes number of writes/swaps (only n-1 swaps total)",
+  "limitations": "O(n²) time complexity even for nearly sorted data, inefficient for large datasets, not stable (can change relative order of equal elements)",
+  "commonMistakes": "Incorrect loop bounds, not handling duplicate elements properly, unnecessary swaps, confusing with insertion sort",
+  "importantExamPoints": "Always O(n²) regardless of data distribution\\nOnly n-1 swaps total in entire sort\\nNot stable (equal elements may change position)\\nComparison with insertion sort (selection minimizes swaps, insertion minimizes comparisons)",
+  "twoMarkQuestions": [
+    "Define selection sort.",
+    "How many swaps does selection sort make in total?",
+    "Is selection sort stable?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain selection sort algorithm and complexity analysis.",
+      "answer": "Selection Sort is an in-place comparison sort. It divides the array into a sorted subarray (left) and unsorted subarray (right). In each iteration i (from 0 to n-2), it finds the minimum element in the unsorted subarray arr[i..n-1] and swaps it with arr[i]. \n\nKey characteristic: Only one swap occurs per pass, resulting in exactly n-1 swaps total for the entire sort.\n\nComplexity:\n- Best case: O(n²) - even if array is already sorted, still finds minimum and swaps\n- Average case: O(n²)\n- Worst case: O(n²) - reverse sorted or any arrangement\n- All cases are O(n²) because always scans entire unsorted portion\n- Space: O(1) - in-place, no extra memory\n\nNumber of comparisons: (n-1) + (n-2) + ... + 1 = n(n-1)/2\nNumber of swaps: n-1 (one per pass)\n\nComparison with Bubble Sort: Both O(n²), but selection sort makes only n-1 swaps while bubble sort may make many swaps. Comparison with Insertion Sort: Selection sort does fewer swaps (n-1) but more comparisons; insertion sort does fewer comparisons on nearly sorted data but may do more swaps.\n\nStability: Not stable - equal elements may change relative order since we swap arr[i] with min_index regardless of whether they're equal.\n\nApplications: When memory write operation is costly (only n-1 writes needed). Educational use."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain selection sort with algorithm, pseudocode, complexity, and comparison with other sorts.",
+      "answer": "Selection Sort: \n\nAlgorithm: The algorithm maintains two subarrays in a given array:\n1. The subarray which is already sorted (built up from left to right)\n2. The remaining subarray which is unsorted\n\nIn each iteration, the minimum element from the unsorted subarray is picked and moved to the sorted subarray.\n\nPseudocode:\nBEGIN\n  SET n = length(arr)\n  FOR i = 0 TO n-1\n    SET min_index = i\n    FOR j = i+1 TO n\n      IF arr[j] < arr[min_index]\n        SET min_index = j\n      END IF\n    END FOR\n    SWAP arr[i] WITH arr[min_index]\n  END FOR\nEND\n\nComplexity:\n- Time: Always O(n²) for best, average, and worst case\n- Comparisons: n(n-1)/2 always\n- Swaps: Exactly n-1 swaps for entire sort\n- Space: O(1) in-place\n\nComparison with Other Sorts:\n- vs Bubble Sort: Both O(n²). Selection sort makes n-1 swaps, bubble sort may make many swaps. Selection is better when write operation is costly.\n- vs Insertion Sort: Selection sort always O(n²). Insertion sort is O(n) for best case (already sorted) and O(n²) average/worst. Insertion sort is stable, selection sort is not.\n- vs Merge/Heap Sort: Those are O(n log n) much faster for large datasets.\n\nApplications:\n1. Educational purposes to teach sorting fundamentals\n2. When memory write operation is very expensive (only n-1 writes)\n3. Small datasets\n4. When stability is not required\n\nLimitations: O(n²) makes it impractical for large datasets. Not stable. Performance independent of input data (always same comparisons)."
+    }
+  ],
+  "mcqs": [
+    { "question": "Selection sort always makes exactly how many swaps?", "options": ["n-1", "n", "n²", "0"], "answer": "n-1" },
+    { "question": "Selection sort is?", "options": ["Stable", "Unstable", "Adaptive", "None"], "answer": "Unstable" }
+  ],
+  "practiceQuestions": [
+    "Implement selection sort.",
+    "Given [64, 25, 12, 22, 11], show step-by-step selection sort.",
+    "Compare selection sort with insertion sort on nearly sorted data."
+  ]
+}

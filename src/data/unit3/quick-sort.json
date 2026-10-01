@@ -1,0 +1,47 @@
+{
+  "id": 7,
+  "title": "Quick Sort",
+  "definition": "Quick Sort is a highly efficient comparison sort based on the divide-and-conquer paradigm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively. Quick Sort is usually faster than other O(n log n) algorithms like merge sort and heap sort.",
+  "conceptExplanation": "Quick Sort follows divide-and-conquer: 1) Choose a pivot element. 2) Partition the array so elements < pivot are on left and elements > pivot are on right. 3) Recursively sort the sub-arrays. The choice of pivot and partitioning strategy greatly affects performance. Average case O(n log n), worst case O(n²) (when pivot is smallest/largest element consistently).",
+  "keyPoints": "- Divide and conquer - Pivot selection - Partitioning - Recursive sorting - Average O(n log n), worst O(n²)",
+  "importantTerminology": "Quick Sort, Pivot, Partition, Divide and Conquer, In-place",
+  "workingPrinciple": "The algorithm selects a pivot (commonly first, last, middle, or random element). It then partitions the array: all elements less than pivot go to left, greater go to right. The pivot is now in its final sorted position. This process recurses on the left and right sub-arrays. Partitioning can be done using Lomuto scheme (simple, uses last element as pivot) or Hoare scheme (more efficient, uses first element as pivot).",
+  "realLifeExample": "Sorting large datasets, database sorting, efficient general-purpose sort",
+  "dsaExample": "Sorting array [10, 80, 30, 90, 40, 50, 70] with pivot 30: partition → [10], [30], [40, 50, 70, 90, 80], then recursively sort sub-arrays",
+  "diagram": "Quick sort partition: [10, 80, 30, 90, 40, 50, 70] choosing pivot=70 (last element), partition: [10, 80, 30, 90, 40, 50] | [70] | [] elements < 70 on left, greater on right",
+  "algorithm": "Quick Sort Algorithm (Lomuto Partition Scheme):\n1. QUICKSORT(arr, low, high)\n2. IF low < high\n3.   SET pi = PARTITION(arr, low, high)\n4.   QUICKSORT(arr, low, pi - 1)\n5.   QUICKSORT(arr, pi + 1, high)\n6. END IF\n\nPARTITION(arr, low, high):\n1. SET pivot = arr[high]\n2. SET i = low - 1\n3. FOR j = low TO high - 1\n4.   IF arr[j] < pivot\n5.     SET i = i + 1\n5.     SWAP arr[i], arr[j]\n6.   END IF\n7. END FOR\n6. SWAP arr[i + 1], arr[high]\n7. RETURN i + 1\n\nHOARE Partition Scheme alternative: first element as pivot, two-pointer approach.",
+  "pseudocode": "BEGIN\n  FUNCTION quicksort(arr, low, high)\n    IF low < high\n      SET pi = partition(arr, low, high)\n      quicksort(arr, low, pi - 1)\n      quicksort(arr, pi + 1, high)\n    END IF\n  END FUNCTION\n\n  FUNCTION partition(arr, low, high)\n    SET pivot = arr[high]\n    SET i = low - 1\n    FOR j = low TO high - 1\n      IF arr[j] < pivot\n        SET i = i + 1\n        SWAP arr[i] WITH arr[j]\n      END IF\n    END FOR\n    SWAP arr[i + 1] WITH arr[high]\n    RETURN i + 1\n  END FUNCTION\nEND",
+  "jsCode": "// Quick Sort implementation with Lomuto partition\\nfunction quickSort(arr, low, high) {\\n  if (low < high) {\n    const pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n  return arr;\n}\n\nfunction partition(arr, low, high) {\\n  const pivot = arr[high];\\n  let i = low - 1;\\n  \\n  for (let j = low; j < high; j++) {\\n    if (arr[j] < pivot) {\\n      i++;\\n      [arr[i], arr[j]] = [arr[j], arr[i]];\\n    }\\n  }\\n  \\n  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];\\n  return i + 1;\\n}\n\\n// Example usage\\nconst arr = [10, 80, 30, 90, 40, 50, 70];\\nconsole.log('Original:', arr);\\nquickSort(arr, 0, arr.length - 1);\\nconsole.log('Sorted:', arr); \\n// [10, 30, 40, 50, 70, 80, 90]",
+  "complexity": "Time: Best case O(n log n) - balanced partitions\\nAverage case O(n log n)\\nWorst case O(n²) - smallest or largest pivot consistently (e.g., already sorted with first/pivot choice)\\nSpace: O(log n) - recursive call stack\n\nOptimizations: Random pivot, median-of-three pivot, tail recursion elimination",
+  "applications": "General-purpose sorting, large datasets, when average-case performance is critical",
+  "advantages": "Average O(n log n) performance, in-place O(log n) space, cache-friendly, typically faster than merge/heap sort in practice",
+  "limitations": "Worst case O(n²) if pivot selection is poor, not stable, performance varies with input and pivot choice",
+  "commonMistakes": "Poor pivot choice (always first/last on sorted data), not handling duplicate elements well, stack overflow with deep recursion, incorrect partition logic",
+  "importantExamPoints": "Pivot selection strategies: first, last, middle, random, median-of-three\\nLomuto vs Hoare partition scheme\\nWorst case avoidance: random pivot or median-of-three\\nBest case: O(n log n) with balanced partitions\\nAverage case: O(n log n) regardless of input (with good pivot)\\nNot stable - equal elements may change relative order\\nIn-place with O(log n) stack space\n\nTypical performance: ~2-3x faster than merge sort/heap sort in practice due to cache efficiency.",
+  "twoMarkQuestions": [
+    "Define quick sort.",
+    "What is a pivot in quick sort?",
+    "What is the average time complexity of quick sort?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain quick sort algorithm, pivot selection, and complexity.",
+      "answer": "Quick Sort is a comparison sort using divide-and-conquer. \n\nAlgorithm: Choose pivot, partition array around pivot (elements < pivot on left, > pivot on right), recursively sort sub-arrays.\n\nPivot Selection Strategies:\n- First element: Simple, but worst case O(n²) on sorted data\n- Last element: Same as above\n- Middle element: Better balance\n- Random element: Avoids worst case with high probability\n- Median-of-three: Median of first, middle, last elements\n\nPartitioning:\n- Lomuto scheme: Uses last element as pivot, simpler, moves pivot to final position\n- Hoare scheme: Uses first element, two pointers moving toward each other, generally fewer swaps\n\nComplexity:\n- Best case: O(n log n) - perfectly balanced partitions at every level\n- Average case: O(n log n) - regardless of initial order (with random pivot)\n- Worst case: O(n²) - smallest or largest element always as pivot (avoided with random/methods)\n- Space: O(log n) for recursive call stack (depth of recursion tree)\n- Comparisons: ~n log n on average, n² in worst case\n\nApplications: General-purpose sorting, large datasets, when cache efficiency matters.\n\nStability: Not stable. Equal elements may change relative order during partitioning.\n\nOptimizations: Random pivot, median-of-three, three-way partitioning for duplicates, tail recursion elimination."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain quick sort with algorithm, pivot selection, partitioning, and complexity analysis.",
+      "answer": "Quick Sort: \n\nAlgorithm: Uses divide-and-conquer paradigm. Select a pivot element from the array. Partition the remaining elements into two sub-arrays: those less than the pivot and those greater than the pivot. The pivot is now in its final position. Recursively apply the same process to the sub-arrays.\n\nPivot Selection:\n- First/last: Simple but O(n²) on sorted data\n- Random: Avoids worst case with high probability\n- Median-of-three: Good balance, uses median of first/middle/last\n\nPartitioning Schemes:\n- Lomuto: pivot = arr[high], i = low-1, FOR j = low to high-1, if arr[j] < pivot: i++, swap arr[i], arr[j], finally swap arr[i+1], arr[high], return i+1\n- Hoare: pivot = arr[low], i = low-1, j = high+1, REPEAT: i++, j-- UNTIL arr[i] >= pivot AND arr[j] <= pivot, swap arr[i], arr[j] UNTIL i >= j, return j\n\nComplexity:\n- Best case: O(n log n) - balanced partitions at every level (depth = log n, n work per level)\n- Average case: O(n log n) - proven regardless of input (with good pivot)\n- Worst case: O(n²) - when pivot is smallest or largest element always (depth = n, work = n+(n-1)+...+1)\n- Space: O(log n) recursive call stack (not O(n) because tail recursion can be eliminated)\n- Number of comparisons: ~1.39 n log n on average\n\nComparison with Other Sorts:\n- vs Merge Sort: Both O(n log n), but quick sort is in-place (O(log n) vs O(n) space), merge sort is stable, quick sort is not stable\n- vs Heap Sort: Both O(n log n), heap sort has guaranteed O(n log n), quick sort has worst O(n²) but faster average\n- vs Insertion/Bubble/Selection: O(n²) vs O(n log n), quick sort much faster for large data\n\nPractical Note: Quick sort is typically 2-3x faster than other O(n log n) sorts in practice due to cache locality. JavaScript's Array.prototype.sort() often uses a variant of quick sort (Timsort in modern engines)."
+    }
+  ],
+  "mcqs": [
+    { "question": "Quick sort uses which paradigm?", "options": ["Divide and conquer", "Greedy", "Dynamic programming", "Backtracking"], "answer": "Divide and conquer" },
+    { "question": "The worst case time complexity of quick sort is?", "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)"], "answer": "O(n²)" }
+  ],
+  "practiceQuestions": [
+    "Implement quick sort.",
+    "Given [10, 80, 30, 90, 40, 50, 70], execute quick sort showing partitions.",
+    "Compare quick sort with merge sort on stability and space complexity."
+  ]
+}

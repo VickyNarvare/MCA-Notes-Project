@@ -1,0 +1,47 @@
+{
+  "id": 2,
+  "title": "Queues",
+  "definition": "A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle. Elements are added at one end (rear) and removed from the other end (front).",
+  "conceptExplanation": "The FIFO principle means the first element enqueued is the first one to be dequeued. The two primary operations are enqueue (add to rear) and dequeue (remove from front). Front points to the front element, Rear points to the rear element.",
+  "keyPoints": "- FIFO principle - Operations at two ends (front and rear) - Enqueue, Dequeue operations - Array or linked implementation",
+  "importantTerminology": "Queue, Front, Rear, Enqueue, Dequeue, Underflow, Overflow, FIFO",
+  "workingPrinciple": "Enqueue adds an element to the rear of the queue, incrementing the rear pointer. Dequeue removes the front element, incrementing the front pointer. If enqueue is attempted on a full queue, it causes overflow. If dequeue is attempted on an empty queue, it causes underflow.",
+  "realLifeExample": "Print job queue, customer service line, breadth-first search, task scheduling",
+  "dsaExample": "Implementing BFS, task scheduling, print queue management",
+  "diagram": "Queue operations showing enqueue and dequeue: front -> [10] -> [20] -> [30] -> rear (front moves on dequeue, rear moves on enqueue)",
+  "algorithm": "Enqueue Operation:\n1. Check if queue is full (overflow)\n2. If not, increment rear pointer\n3. Add element at rear position\n4. Return success\n\nDequeue Operation:\n1. Check if queue is empty (underflow)\n2. If not, get element at front\n3. Increment front pointer\n4. Return removed element\n\nFront Operation:\n1. Check if queue is empty\n2. Return element at front position without removing it\n\nRear Operation:\n1. Check if queue is empty\n2. Return element at rear position without removing it",
+  "pseudocode": "BEGIN\n  // Enqueue\n  IF queue IS full\n    PRINT 'Overflow'\n  ELSE\n    SET rear = rear + 1\n    SET queue[rear] = item\n  END IF\n\n  // Dequeue\n  IF queue IS empty\n    PRINT 'Underflow'\n  ELSE\n    SET item = queue[front]\n    SET front = front + 1\n  END IF\n\n  // Front operation\n  IF queue IS empty\n    PRINT 'Queue is empty'\n  ELSE\n    PRINT 'Front element:', queue[front]\n  END IF\n\n  // Rear operation\n  IF queue IS empty\n    PRINT 'Queue is empty'\n  ELSE\n    PRINT 'Rear element:', queue[rear]\n  END IF\nEND",
+  "jsCode": "// Array implementation of Queue\\nclass Queue {\n  constructor(capacity) {\n    this.items = [];\n    this.capacity = capacity;\n    this.front = 0;\n    this.rear = -1;\n  }\n\n  // Enqueue operation\\n  enqueue(element) {\n    if (this.isFull()) {\n      console.log('Queue Overflow');\n      return;\n    }\n    this.rear++;\n    this.items[this.rear] = element;\n    console.log(element + ' enqueued to queue');\n  }\n\n  // Dequeue operation\\n  dequeue() {\n    if (this.isEmpty()) {\n      console.log('Queue Underflow');\n      return null;\n    }\n    const element = this.items[this.front];\n    this.front++;\n    return element;\n  }\n\n  // Front operation\\n  frontElement() {\n    if (this.isEmpty()) {\n      console.log('Queue is empty');\n      return null;\n    }\n    return this.items[this.front];\n  }\n\n  // Rear operation\\n  rearElement() {\n    if (this.isEmpty()) {\n      console.log('Queue is empty');\n      return null;\n    }\n    return this.items[this.rear];\n  }\n\n  // Check if queue is empty\\n  isEmpty() {\n    return this.front > this.rear;\n  }\n\n  // Check if queue is full\\n  isFull() {\n    return this.rear === this.capacity - 1;\n  }\n\n  // Display queue\\n  display() {\n    console.log('Queue:', this.items.slice(this.front, this.rear + 1));\n  }\n}\n\\n// Example usage\\nconst queue = new Queue(5);\\nqueue.enqueue(10);\\nqueue.enqueue(20);\\nqueue.enqueue(30);\\nqueue.display(); \\n// Queue: [10, 20, 30]\\nconsole.log('Dequeue:', queue.dequeue()); \\n// 10\\nqueue.display(); \\n// Queue: [20, 30]\\nconsole.log('Front:', queue.frontElement()); \\n// 20\\nconsole.log('Rear:', queue.rearElement()); \\n// 30",
+  "complexity": "Time: Enqueue O(1), Dequeue O(1), Front/Rear O(1)\\nSpace: O(n) for n elements (capacity limited)",
+  "applications": "Print job queue, customer service BFS, task scheduling, breadth-first search",
+  "advantages": "O(1) enqueue/dequeue, fair processing order (FIFO), useful for resource scheduling",
+  "limitations": "Fixed size (array-based), not suitable for LIFO requirements, circular queue needed for efficient space usage",
+  "commonMistakes": "Confusing enqueue/dequeue with stack operations (push/pop), not checking overflow/underflow, front/rear index off-by-one errors",
+  "importantExamPoints": "FIFO principle and its applications\\nArray vs linked implementation\\nCircular queue concept for efficient space usage\\nDifference from stack (LIFO vs FIFO)",
+  "twoMarkQuestions": [
+    "Define queue.",
+    "What does FIFO stand for?",
+    "What is the time complexity of enqueue operation?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain queue operations, implementations, and applications.",
+      "answer": "A queue follows FIFO (First-In-First-Out) principle. Elements are added at rear and removed from front. Operations: - Enqueue: Adds element to rear. Time: O(1). - Dequeue: Removes element from front. Time: O(1). - Front: Returns front element without removal. - Rear: Returns rear element. - isEmpty: Checks if queue empty. - isFull: Checks if capacity reached.\n\nArray Implementation: Fixed capacity, front and rear indices. Circular queue wraps around when reaching end, reusing space. Time: O(1) for all operations.\n\nLinked Implementation: Dynamic size using linked list. Front points to first node, rear points to last node. No fixed capacity, no overflow.\n\nApplications: Print job scheduling (first job printed first), customer service lines, task scheduling in OS, breadth-first search in graphs, event simulation.\n\nCircular Queue: Overcomes array limitation by wrapping rear to beginning when reaching end. Condition: (rear + 1) % capacity == front for full. Efficient space utilization."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain queue with array and linked implementations, circular queue, and applications.",
+      "answer": "A queue follows FIFO principle. \n\nArray Implementation: Fixed-size array with front and rear indices. Enqueue: rear = (rear + 1) % capacity, store element. Dequeue: item = queue[front], front = (front + 1) % capacity. Circular queue efficiently reuses space.\n\nLinked Implementation: Using linked list with front and rear pointers. Dynamic size, no overflow. Enqueue: create new node, attach at rear, update rear. Dequeue: move front to next node.\n\nCircular Queue: Solves wastage in linear array. Uses modulo arithmetic. Full condition: (rear + 1) % capacity == front. Empty condition: front == rear.\n\nApplications: 1) Print spooling - jobs queued in order. 2) CPU scheduling - round-robin uses queue. 3) Breadth-first search - visits nodes level by level. 4) Customer service - first-come-first-served. 5) Task scheduling in operating systems.\n\nComplexity: All operations O(1). Space: O(n) for n elements."
+    }
+  ],
+  "mcqs": [
+    { "question": "FIFO stands for?", "options": ["First In First Out", "First In Last Out", "Last In First Out", "Last In Last Out"], "answer": "First In First Out" },
+    { "question": "Enqueue operation adds element at?", "options": ["Front", "Rear", "Both", "Middle"], "answer": "Rear" }
+  ],
+  "practiceQuestions": [
+    "Implement a queue with array and linked list.",
+    "Write an algorithm for circular queue enqueue and dequeue.",
+    "Explain how queue is used in breadth-first search."
+  ]
+}

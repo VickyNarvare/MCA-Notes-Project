@@ -1,0 +1,47 @@
+{
+  "id": 1,
+  "title": "Stacks",
+  "definition": "A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle. Elements are added and removed only from one end, called the top.",
+  "conceptExplanation": "The LIFO principle means the last element pushed onto the stack is the first one to be popped. The two primary operations are push (add to top) and pop (remove from top). Peek/Top returns the top element without removing it.",
+  "keyPoints": "- LIFO principle - Operations at one end (top) - Push, Pop, Peek operations - Array or linked implementation",
+  "importantTerminology": "Stack, Top, Push, Pop, Peek, Underflow, Overflow, LIFO",
+  "workingPrinciple": "Push adds an element to the top of the stack, incrementing the top pointer. Pop removes the top element, decrementing the top pointer. Peek returns the top element without removing it. If push is attempted on a full stack, it causes overflow. If pop is attempted on an empty stack, it causes underflow.",
+  "realLifeExample": "Browser back button, undo/redo in text editors, function call stack, expression evaluation",
+  "dsaExample": "Evaluating postfix expressions, converting infix to postfix, checking balanced parentheses",
+  "diagram": "Stack operations showing push and pop: top -> [50] -> [40] -> [30] (top moves with each operation)",
+  "algorithm": "Push Operation:\n1. Check if stack is full (overflow)\n2. If not, increment top pointer\n3. Add element at top position\n4. Return success\n\nPop Operation:\n1. Check if stack is empty (underflow)\n2. If not, get element at top\n3. Decrement top pointer\n4. Return removed element\n\nPeek Operation:\n1. Check if stack is empty\n2. Return element at top position without removing it",
+  "pseudocode": "BEGIN\n  // Push\n  IF stack IS full\n    PRINT 'Overflow'\n  ELSE\n    SET top = top + 1\n    SET stack[top] = item\n  END IF\n\n  // Pop\n  IF stack IS empty\n    PRINT 'Underflow'\n  ELSE\n    SET item = stack[top]\n    SET top = top - 1\n  END IF\n\n  // Peek\n  IF stack IS empty\n    PRINT 'Stack is empty'\n  ELSE\n    PRINT 'Top element:', stack[top]\n  END IF\nEND",
+  "jsCode": "// Array implementation of Stack\\nclass Stack {\n  constructor(capacity) {\n    this.items = [];\n    this.capacity = capacity;\n    this.top = -1;\n  }\n\n  // Push operation\\n  push(element) {\n    if (this.isFull()) {\n      console.log('Stack Overflow');\n      return;\n    }\n    this.items.push(element);\n    this.top++;\n    console.log(element + ' pushed to stack');\n  }\n\n  // Pop operation\\n  pop() {\n    if (this.isEmpty()) {\n      console.log('Stack Underflow');\n      return null;\n    }\n    const element = this.items.pop();\n    this.top--;\n    return element;\n  }\n\n  // Peek operation\\n  peek() {\n    if (this.isEmpty()) {\n      console.log('Stack is empty');\n      return null;\n    }\n    return this.items[this.items.length - 1];\n  }\n\n  // Check if stack is empty\\n  isEmpty() {\n    return this.top === -1;\n  }\n\n  // Check if stack is full\\n  isFull() {\n    return this.top === this.capacity - 1;\n  }\n\n  // Display stack\\n  display() {\n    console.log('Stack:', this.items);\n  }\n}\n\\n// Example usage\\nconst stack = new Stack(5);\\nstack.push(10);\\nstack.push(20);\\nstack.push(30);\\nstack.display(); \\n// Stack: [10, 20, 30]\\nconsole.log('Peek:', stack.peek()); \\n// 30\\nconsole.log('Pop:', stack.pop()); \\n// 30\\nstack.display(); \\n// Stack: [10, 20]\\n",
+  "complexity": "Time: Push O(1), Pop O(1), Peek O(1)\\nSpace: O(n) for n elements (capacity limited)",
+  "applications": "Browser back button, undo/redo functionality, function call stack, expression evaluation, backtracking algorithms",
+  "advantages": "O(1) push/pop operations, simple implementation, memory efficient (array-based), LIFO order useful for many algorithms",
+  "limitations": "Fixed size (array-based), limited to LIFO operations only, stack overflow possible",
+  "commonMistakes": "Confusing push/pop with queue operations (FIFO), not checking for overflow/underflow, using wrong index for peek",
+  "importantExamPoints": "LIFO principle and its applications\\nArray vs linked implementation differences\\nOverflow and underflow conditions\\nUse cases: recursion, expression parsing, backtracking",
+  "twoMarkQuestions": [
+    "Define stack.",
+    "What does LIFO stand for?",
+    "What is the time complexity of push operation?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain stack operations, implementations, and applications.",
+      "answer": "A stack is a linear data structure following LIFO (Last-In-First-Out) principle. Operations: - Push: Adds element to top. Time: O(1). - Pop: Removes element from top. Time: O(1). - Peek/Top: Returns top element without removal. Time: O(1). - isEmpty: Checks if stack is empty. - isFull: Checks if stack capacity reached.\n\nArray Implementation: Fixed capacity, top index tracks top element, items stored in array. Operations are O(1).\nLinked Implementation: Dynamic size, each node contains data and next pointer. Head represents top. No fixed capacity.\n\nApplications: Browser back button (last visited page first), undo/redo in editors, function call stack (each function call pushes return address), evaluating postfix expressions, converting infix to postfix, checking balanced parentheses, backtracking algorithms (maze solving)."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain stack with array and linked implementations, operations, and applications.",
+      "answer": "A stack follows LIFO principle with operations at one end (top). \n\nArray Implementation: Fixed capacity array, top index initialized to -1. Push increments top and stores element. Pop removes from top and decrements top. Peek returns top element. Overflow if top = capacity-1. Underflow if top = -1. Time: O(1) for all operations.\n\nLinked Implementation: Each node has data and next. Head pointer always points to top. Push creates new node, sets next to current head, updates head. Pop moves head to next node. Dynamic size, no overflow condition.\n\nApplications:\n1. Browser back button - each visited page is pushed, popping returns to previous.\n2. Undo/redo - each action pushed, undo pops last action.\n3. Function call stack - each function call pushes frame, returns pop frame.\n4. Expression evaluation - postfix evaluation uses stack.\n5. Balanced parentheses checking.\n6. Backtracking (maze, puzzles).\n\nConversion: Infix to postfix uses stack to reorder operators based on precedence.\n\nComplexity: All stack operations O(1). Space: O(n) for n elements."
+    }
+  ],
+  "mcqs": [
+    { "question": "LIFO stands for?", "options": ["Last In First Out", "First In Last Out", "Linear In First Out", "Last In Last Out"], "answer": "Last In First Out" },
+    { "question": "Which of the following is a stack operation?", "options": ["Enqueue", "Dequeue", "Push", "Insert"], "answer": "Push" }
+  ],
+  "practiceQuestions": [
+    "Implement a stack with array and linked list.",
+    "Write a function to check if parentheses in an expression are balanced.",
+    "Convert infix expression A + B * C to postfix using stack."
+  ]
+}

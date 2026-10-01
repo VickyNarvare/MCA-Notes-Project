@@ -1,0 +1,47 @@
+{
+  "id": 6,
+  "title": "Shell Sort",
+  "definition": "Shell Sort is an in-place comparison sort that generalizes insertion sort by allowing the comparison and exchange of elements at distant positions. It reduces the amount of shifting required by sorting elements separated by a gap of h, then reducing the gap until it becomes 1 (at which point it becomes insertion sort).",
+  "conceptExplanation": "Shell Sort improves upon insertion sort by allowing exchanges of elements far apart. The algorithm uses a gap sequence (h values) starting with a large gap, then reducing the gap in each pass. When the gap is 1, the algorithm performs a regular insertion sort, but by this point, the array is already partially sorted, making the insertion sort efficient. Common gap sequences include Knuth's sequence (1, 4, 13, 40, ...), Sedgewick's sequence, and Hibbard's sequence.",
+  "keyPoints": "- Generalized insertion sort - Uses gap sequence - Reduces shifting needed - In-place - Complexity depends on gap sequence",
+  "importantTerminology": "Shell Sort, Gap, h-sequence, In-place sort",
+  "workingPrinciple": "The algorithm starts with a large gap (h) between elements to compare and sort. It performs a gapped insertion sort for this gap size. The gap is reduced in each iteration based on the gap sequence. When gap = 1, it becomes a standard insertion sort on the nearly-sorted array. Example with gap sequence [5, 3, 1] on array of size 10: First pass sorts elements at positions (0,5), (1,6), (2,7), (3,8), (4,9) with gap=5. Then gap=3 sorts (0,3), (1,4), (2,5), (3,6), (4,7), (5,8), (6,9). Finally gap=1 performs standard insertion sort.",
+  "realLifeExample": "Sorting medium-sized datasets, when insertion sort is too slow but full O(n log n) sort is overkill",
+  "dsaExample": "Sorting array [23, 12, 1, 8, 34, 54, 2] with gap sequence [3, 1]: Gap 3 → sort sublists [23,54],[12,34],[1,54] → [54,34,1] → after sorting [34,23,1,...], Gap 1 → insertion sort on mostly sorted array",
+  "diagram": "Shell sort with gap sequence: [23,12,1,8,34,54,2] gap=3 → sort elements at distance 3 → [8,12,1,23,34,54,2] → gap=1 → insertion sort → [1,2,8,12,23,34,54] sorted",
+  "algorithm": "Shell Sort Algorithm:\n1. INITIALIZE gap = n / 2 (or using gap sequence)\n2. WHILE gap > 0\n3.   FOR i = gap TO n-1\n4.     SET key = arr[i]\n5.     SET j = i - gap\n6.     WHILE j >= 0 AND arr[j] > key\n7.       SET arr[j + gap] = arr[j]\n5.     SET j = j - gap\n6.   END WHILE\n7.     SET arr[j + gap] = key\n8.   END FOR\n8.   UPDATE gap = gap / 2 (or next in sequence)\n9. END WHILE\n\nFinal gap=1 performs standard insertion sort.",
+  "pseudocode": "BEGIN\n  SET n = length(arr)\n  SET gap = n / 2\n  WHILE gap > 0\n    FOR i = gap TO n-1\n      SET key = arr[i]\n      SET j = i - gap\n      WHILE j >= 0 AND arr[j] > key\n        SET arr[j + gap] = arr[j]\n        SET j = j - gap\n      END WHILE\n      SET arr[j + gap] = key\n    END FOR\n    gap = floor(gap / 2)\n  END WHILE\nEND",
+  "jsCode": "// Shell Sort implementation\\nfunction shellSort(arr) {\\n  const n = arr.length;\n  let gap = Math.floor(n / 2);\n  \\n  while (gap > 0) {\\n    for (let i = gap; i < n; i++) {\\n      let key = arr[i];\n      let j = i - gap;\n      \\n      while (j >= 0 && arr[j] > key) {\\n        arr[j + gap] = arr[j];\\n        j -= gap;\n      }\\n      \\n      arr[j + gap] = key;\n    }\\n    gap = Math.floor(gap / 2);\n  }\\n  \\n  return arr;\n}\n\\n// Example usage\\nconst arr = [23, 12, 1, 8, 34, 54, 2];\\nconsole.log('Original:', arr);\\nshellSort(arr);\\nconsole.log('Sorted:', arr); \\n// [1, 2, 8, 12, 23, 34, 54]",
+  "complexity": "Time: Depends on gap sequence\\n- Best case: O(n log n) (with optimal gap sequence)\\n- Average case: depends on sequence, typically O(n^(3/2)) or O(n log² n)\\n- Worst case: O(n²) (with poor gap sequence, Shell's original n/2 sequence)\\n- With Knuth sequence: O(n^(3/2))\\n- With Sedgewick sequence: O(n^(4/3))\\n- With Hibbard's sequence: O(n^(3/2))\\nSpace: O(1) - in-place",
+  "applications": "Medium-sized datasets, when O(n log n) overhead is not needed, embedded systems",
+  "advantages": "Better than O(n²) sorts like bubble/selection/insertion for medium data\\nIn-place O(1) space\\nNo recursion overhead\\nCan be faster than quick sort for small to medium datasets with good gap sequence",
+  "limitations": "Complexity depends heavily on gap sequence choice\\nNot as fast as O(n log n) algorithms for large datasets\\nHarder to analyze and choose optimal gap sequence\\nLess common in standard libraries",
+  "commonMistakes": "Incorrect gap sequence selection, wrong gap update formula, not handling gap=1 case properly, choosing gap that doesn't reduce effectively",
+  "importantExamPoints": "Gap sequence selection is critical (Knuth: h=(3^k-1)/2, Sedgewick, Hibbard)\\nComplexity varies significantly with gap choice\\nShell's original sequence: n/2, n/4, ..., 1 → worst case O(n²)\\nBetter sequences give O(n^(3/2)) or O(n log² n)\\nWhen gap=1, becomes insertion sort on partially sorted array\\nGood alternative to O(n²) sorts for medium data, simpler than O(n log n) sorts",
+  "twoMarkQuestions": [
+    "Define shell sort.",
+    "What is the gap in shell sort?",
+    "When does shell sort become insertion sort?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain shell sort algorithm and gap sequence analysis.",
+      "answer": "Shell Sort is a generalization of Insertion Sort that allows exchange of elements far apart. The algorithm uses a gap sequence to determine which elements to compare and sort.\n\nGap Sequence: Starts with a large gap (e.g., n/2) and reduces it. Common sequences:\n- Shell's original: n/2, n/4, ..., 1 (worst case O(n²))\n- Knuth: (3^k - 1)/2 → 1, 4, 13, 40, ... (O(n^(3/2)))\n- Sedgewick: More complex, O(n^(4/3))\n- Hibbard: 2^k - 1 → 1, 3, 7, 15, ... (O(n^(3/2)))\n\nAlgorithm: Start with gap = n/2. For each gap, perform gapped insertion sort. Reduce gap = floor(gap/2). When gap = 1, it's standard insertion sort on nearly-sorted array.\n\nComplexity:\n- Depends on gap sequence\n- Shell's original: best O(n log n), average/worst O(n²)\n- Knuth sequence: Θ(n^(3/2))\n- Sedgewick: Θ(n^(4/3))\n- Hibbard: Θ(n^(3/2))\n- Space: O(1) in-place\n\nAdvantages over Insertion Sort: Reduces number of shifts by moving elements over distance greater than 1. Good for medium datasets where O(n log n) overhead isn't justified.\n\nApplications: Medium-sized datasets, embedded systems, when simplicity is needed over quick/merge sort complexity."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain shell sort with algorithm, gap sequences, complexity, and comparison with other sorts.",
+      "answer": "Shell Sort: \n\nAlgorithm: Generalized insertion sort that allows exchange of elements at distant positions. Uses a gap sequence starting large and reducing to 1.\n\nPseudocode:\nBEGIN\n  SET n = length(arr)\n  SET gap = n / 2\n  WHILE gap > 0\n    FOR i = gap TO n-1\n      SET key = arr[i]\n      SET j = i - gap\n      WHILE j >= 0 AND arr[j] > key\n        SET arr[j + gap] = arr[j]\n        SET j = j - gap\n      END WHILE\n      SET arr[j + gap] = key\n    END FOR\n    gap = floor(gap / 2)\n  END WHILE\nEND\n\nGap Sequences:\n- Shell's original: n/2, n/4, ..., 1 → worst case O(n²)\n- Knuth: (3^k - 1)/2 → 1, 4, 13, 40, ... → Θ(n^(3/2))\n- Sedgewick: Combination of sequences → Θ(n^(4/3))\n- Hibbard: 2^k - 1 → 1, 3, 7, 15, ... → Θ(n^(3/2))\n\nComplexity:\n- Best case: O(n log n) with optimal sequence\n- Average/worst case: varies by sequence (O(n²) to O(n^(3/2)))\n- Space: O(1) in-place\n\nComparison:\n- vs O(n²) sorts (bubble, selection, insertion): Better for medium data\n- vs Merge/Heap/Quick Sort: Slower for large datasets but simpler, no recursion\n- Good middle ground: simpler than O(n log n), faster than O(n²) for medium n\n\nApplications: Medium datasets (50 < n < 5000), embedded systems, when recursion should be avoided, as intermediate sort before more complex algorithms."
+    }
+  ],
+  "mcqs": [
+    { "question": "Shell sort is a generalization of?", "options": ["Insertion sort", "Selection sort", "Bubble sort", "Merge sort"], "answer": "Insertion sort" },
+    { "question": "Shell's original gap sequence is?", "options": ["n/2, n/4, ..., 1", "1, 2, 3, ...", "log n, n/2, n", "n, n/2, 1"], "answer": "n/2, n/4, ..., 1" }
+  ],
+  "practiceQuestions": [
+    "Implement shell sort.",
+    "Given [23, 12, 1, 8, 34, 54, 2], execute shell sort with gap sequence [3, 1].",
+    "Compare shell sort performance with insertion sort on reverse-sorted array of 100 elements."
+  ]
+}

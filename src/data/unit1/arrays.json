@@ -1,0 +1,47 @@
+{
+  "id": 1,
+  "title": "Arrays",
+  "definition": "An array is a finite ordered set of homogeneous elements stored in consecutive memory locations. Each element is referenced by an index number that specifies its position in the order.",
+  "conceptExplanation": "Arrays provide random access to elements. The position of an element is calculated by adding the base address and the product of the index and element size. This makes arrays efficient for indexed access but inefficient for insertion/deletion in the middle.",
+  "keyPoints": "- Homogeneous elements - Consecutive memory allocation - Index-based access - Fixed size (primarily)",
+  "importantTerminology": "Base address, Index, Element, Subscript, Range, Homogeneous",
+  "workingPrinciple": "Memory is allocated as a contiguous block. The address of element A[i] is: Base_Address + (i * Size_of_element). For multidimensional arrays, row-major or column-major ordering is used.",
+  "realLifeExample": "storing student records, image pixel data, representing matrices in mathematics",
+  "dsaExample": "Finding the sum of all elements in an array, searching for a specific value",
+  "diagram": "Array representation showing base address and elements A[0], A[1], ..., A[n-1]",
+  "algorithm": "Array Index Calculation:\n1. Get base address of array\n2. Get index i\n3. Calculate address: base + (i * elementSize)\n4. Access memory at calculated address",
+  "pseudocode": "BEGIN\n  GET base_address, i, elementSize\n  address = base_address + (i * elementSize)\n  RETURN address\nEND",
+  "jsCode": "// Address calculation for 1D array\\nfunction getAddress(baseAddress, index, elementSize) {\\n  return baseAddress + (index * elementSize);\\n}\\n\\n// Example: base = 1000, elementSize = 4, index = 5\\nlet addr = getAddress(1000, 5, 4); // 1020\\nconsole.log(\"Address:\", addr);",
+  "complexity": "Time: O(1) for access, O(n) for search, O(n) for insertion/deletion\\nSpace: O(n) for n elements",
+  "applications": "Numerical computation, image processing, storing records, implementing other data structures",
+  "advantages": "Random access, cache-friendly, simple implementation, easy to iterate",
+  "limitations": "Fixed size, expensive insertion/deletion, memory waste if sparse",
+  "commonMistakes": "Confusing 0-based vs 1-based indexing, not accounting for element size in address calculation",
+  "importantExamPoints": "Address formula for 1D and 2D arrays, row-major vs column-major ordering, sparse matrix representation",
+  "twoMarkQuestions": [
+    "Define array.",
+    "What is the time complexity of accessing an array element?",
+    "What is row-major ordering?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain array representation and address calculation in detail.",
+      "answer": "An array is a collection of identical type of data elements stored in consecutive memory locations. Each element is identified by an index. The address of element A[i] is calculated as: Base_Address + (i * Size_of_element). For 2D arrays A[m][n], row-major ordering stores elements row by row: Address = Base + ((i * n) + j) * Size. Column-major stores column by column: Address = Base + ((j * m) + i) * Size. This allows direct access to any element."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain array operations, memory representation, and applications in detail.",
+      "answer": "Arrays support operations like traversal, insertion, deletion, search, and update. Memory representation is contiguous for static arrays and heap-allocated for dynamic arrays. 2D arrays use row-major (C) or column-major (Fortran) ordering. Applications include numerical methods, database indexing, and graphic arrays. Advantages: O(1) access, locality of reference. Limitations: Fixed size, costly insertions. Sparse matrices use triplet representation or hash mapping to save space."
+    }
+  ],
+  "mcqs": [
+    { "question": "The time complexity of accessing an array element is?", "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"], "answer": "O(1)" },
+    { "question": "In row-major ordering, a 2D array A[m][n] is stored?", "options": ["Row by row", "Column by column", "Randomly", "Alternating"], "answer": "Row by row" }
+  ],
+  "practiceQuestions": [
+    "Given array A = [3, 7, 2, 9, 5], find the address of A[3] if base address is 500 and element size is 2.",
+    "Convert the polynomial 3x^2 + 2x + 1 to linked list representation.",
+    "Add two polynomials: P(x) = 2x^2 + 3x + 1 and Q(x) = x^2 + 4x + 5"
+  ]
+}

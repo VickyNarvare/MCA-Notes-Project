@@ -1,0 +1,47 @@
+{
+  "id": 5,
+  "title": "Insertion Sort",
+  "definition": "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It works by taking one element at a time and inserting it into its correct position among the previously sorted elements.",
+  "conceptExplanation": "Insertion Sort iterates through the array, growing a sorted subarray behind it. For each new element (key), it compares it with elements in the sorted subarray and shifts those elements one position to the right until finding the correct position for the key. It is like sorting playing cards in your hand.",
+  "keyPoints": "- Builds sorted array one element at a time - Inserts each element into correct position - Shifts elements to make room - Adaptive (fast on nearly sorted data) - O(n²) worst case, O(n) best case",
+  "importantTerminology": "Insertion Sort, Key, Sorted subarray, Unsorted subarray, In-place",
+  "workingPrinciple": "Starting from the second element (i=1), the element is selected as 'key'. The algorithm compares key with elements in the sorted subarray arr[0..i-1] from right to left. If an element is greater than key, it is shifted one position to the right. This continues until an element smaller than key is found or the beginning of the array is reached. The key is then placed at the correct position. The sorted subarray grows by one element after each iteration.",
+  "realLifeExample": "Sorting playing cards in hand, arranging a hand of cards, small datasets",
+  "dsaExample": "Sorting array [12, 11, 13, 5, 6]: i=1, key=11, shift 12 right → [12, 12, 13, 5, 6], place 11 at index 0 → [11, 12, 13, 5, 6], i=2, key=13, already in place → [11, 12, 13, 5, 6], i=3, key=5, shift 13,12,12 right → [5, 12, 13, 13, 6], wait correct → [5, 11, 12, 13, 6], i=4, key=6, shift 13 right → [5, 11, 12, 13, 13], place 6 at index 3 → [5, 6, 11, 12, 13] sorted",
+  "diagram": "Insertion sort steps: [12,11,13,5,6] → i=1, key=11, compare with 12, shift 12 right, place 11 → [11,12,13,5,6] → i=2, key=13, compare with 12, 13>12 no shift → [11,12,13,5,6] → i=3, key=5, compare with 13 shift, compare with 12 shift, compare with 11 shift, place 5 at start → [5,11,12,13,6] → i=4, key=6, compare with 13 shift, compare with 12 shift, 11<6 stop, place 6 → [5,6,11,12,13] sorted",
+  "algorithm": "Insertion Sort Algorithm:\n1. FOR i = 1 to n-1\n2.   SET key = arr[i]\n3.   SET j = i - 1\n4.   WHILE j >= 0 AND arr[j] > key\n5.     SET arr[j + 1] = arr[j]\n5.   SET j = j - 1\n6.   END WHILE\n7.   SET arr[j + 1] = key\n8. END FOR\n\nAfter each iteration i, the subarray arr[0..i] is sorted.",
+  "pseudocode": "BEGIN\n  SET n = length(arr)\n  FOR i = 1 TO n-1\n    SET key = arr[i]\n    SET j = i - 1\n    WHILE j >= 0 AND arr[j] > key\n      SET arr[j + 1] = arr[j]\n      SET j = j - 1\n    END WHILE\n    SET arr[j + 1] = key\n  END FOR\nEND",
+  "jsCode": "// Insertion Sort implementation\\nfunction insertionSort(arr) {\\n  const n = arr.length;\n  \\n  for (let i = 1; i < n; i++) {\\n    let key = arr[i];\n    let j = i - 1;\n    \\n    while (j >= 0 && arr[j] > key) {\\n      arr[j + 1] = arr[j];\\n      j--;\n    }\\n    \\n    arr[j + 1] = key;\n  }\\n  \\n  return arr;\n}\n\\n// Example usage\\nconst arr = [12, 11, 13, 5, 6];\\nconsole.log('Original:', arr);\\ninsertionSort(arr);\\nconsole.log('Sorted:', arr); \\n// [5, 6, 11, 12, 13]",
+  "complexity": "Time: Best case O(n) - already sorted (only one comparison per element)\\nAverage case O(n²)\\nWorst case O(n²) - reverse sorted\\nSpace: O(1) - in-place sort\nAdaptive: faster on nearly sorted data",
+  "applications": "Small datasets, nearly sorted data, educational purposes",
+  "advantages": "Simple implementation, adaptive (fast on nearly sorted), stable (maintains relative order of equal elements), in-place O(1) space",
+  "limitations": "O(n²) for average and worst case, inefficient for large datasets",
+  "commonMistakes": "Incorrect while loop condition (arr[j] > key vs >=), off-by-one in arr[j + 1] = key, not handling already sorted best case",
+  "importantExamPoints": "Best case O(n) when already sorted\\nStability: maintains relative order of equal elements\\nAdaptive: faster on nearly sorted data (less than n² comparisons)\\nIn-place O(1) space\\nOnline algorithm: can sort as data arrives\n\nKey difference from selection sort: Insertion sort shifts elements and inserts in correct position; selection sort finds minimum and swaps. Insertion sort is stable, selection sort is not.",
+  "twoMarkQuestions": [
+    "Define insertion sort.",
+    "What is the best case time complexity of insertion sort?",
+    "Is insertion sort stable?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain insertion sort algorithm and complexity analysis.",
+      "answer": "Insertion Sort builds the sorted array one element at a time. Starting from the second element (i=1), each element (key) is compared with elements in the sorted subarray arr[0..i-1] from right to left. Elements greater than the key are shifted one position to the right. The key is placed at the correct position.\n\nAlgorithm: FOR i = 1 to n-1: key = arr[i], j = i-1, WHILE j >= 0 AND arr[j] > key: arr[j+1] = arr[j], j--, arr[j+1] = key.\n\nComplexity:\n- Best case: O(n) when array is already sorted (only one comparison per element, no shifts)\n- Average case: O(n²)\n- Worst case: O(n²) when reverse sorted (maximum shifts)\n- Space: O(1) - in-place\n- Comparisons: n(n-1)/2 in worst case\n\nKey Features:\n- Adaptive: performance improves if data is nearly sorted\n- Stable: maintains relative order of equal elements (only shifts when arr[j] > key, not >=)\n- Online: can sort data as it arrives, doesn't need entire array upfront\n- In-place: O(1) extra space\n\nComparison: Better than selection sort for nearly sorted data. Worse than O(n log n) sorts (merge, heap, quick) for large datasets."
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain insertion sort with algorithm, pseudocode, complexity, and applications.",
+      "answer": "Insertion Sort: \n\nAlgorithm: Builds the final sorted array one item at a time. Iterates through the array, growing a sorted subarray behind the current position. For each new element (key), it compares it with elements in the sorted subarray and shifts those elements one position to the right until finding the correct position for the key.\n\nPseudocode:\nBEGIN\n  SET n = length(arr)\n  FOR i = 1 TO n-1\n    SET key = arr[i]\n    SET j = i - 1\n    WHILE j >= 0 AND arr[j] > key\n      SET arr[j + 1] = arr[j]\n      SET j = j - 1\n    END WHILE\n    SET arr[j + 1] = key\n  END FOR\nEND\n\nComplexity Analysis:\n- Best case: O(n) - array already sorted (one comparison per element, no shifts needed)\n- Average case: O(n²)\n- Worst case: O(n²) - reverse sorted array (maximum shifts)\n- Space complexity: O(1) - in-place, no extra memory\n- Number of comparisons: n(n-1)/2 worst case\n- Number of shifts: n(n-1)/2 worst case\n\nApplications:\n1. Small datasets (n < 50)\n2. Nearly sorted data (adaptive, faster than O(n²) average)\n3. Educational purposes - teaches sort fundamentals\n4. Online sorting - can process data as it arrives\n5. Situations where simplicity is prioritized over efficiency\n\nComparison with Other Sorting Algorithms:\n- vs Selection Sort: Both O(n²) worst case. Insertion sort is adaptive (O(n) best), stable. Selection sort always O(n²), not stable. Insertion sort does more comparisons but fewer shifts in some cases.\n- vs Bubble Sort: Insertion sort is more efficient (fewer swaps/shifts). Both O(n²).\n- vs Merge/Heap/Quick Sort: O(n log n) much faster for large datasets.\n\nPractical Use: Preferred for small n, nearly sorted data, or as part of more complex algorithms (like shell sort or quick sort base case)."
+    }
+  ],
+  "mcqs": [
+    { "question": "The best case time complexity of insertion sort is?", "options": ["O(n)", "O(n log n)", "O(n²)", "O(1)"], "answer": "O(n)" },
+    { "question": "Insertion sort is?", "options": ["Stable", "Unstable", "Adaptive", "Both A and C"], "answer": "Both A and C" }
+  ],
+  "practiceQuestions": [
+    "Implement insertion sort.",
+    "Given [12, 11, 13, 5, 6], show step-by-step insertion sort.",
+    "Explain why insertion sort is adaptive and fast on nearly sorted data."
+  ]
+}

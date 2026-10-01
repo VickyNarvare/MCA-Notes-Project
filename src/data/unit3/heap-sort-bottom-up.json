@@ -1,0 +1,47 @@
+{
+  "id": 10,
+  "title": "Bottom-up Heap Sort",
+  "definition": "Bottom-up Heap Sort is a variation of heap sort that builds the heap by processing nodes from the bottom up rather than the traditional top-down approach. This method can be more efficient than the standard build-heap approach because it starts heapification from the leaves and moves upward, taking advantage of the fact that subtrees near the leaves are already heaps.",
+  "conceptExplanation": "In bottom-up heap sort, the heap is built starting from the lowest level and moving upward. Unlike the traditional approach that starts from the last non-leaf node and moves up, the bottom-up approach processes nodes in reverse level order. This can reduce the number of heapify operations needed. After building the heap, the extraction phase is the same as standard heap sort: repeatedly swap the root with the last element, reduce heap size, and heapify the root.",
+  "keyPoints": "- Bottom-up heap construction - More efficient build-heap - O(n) build-heap - Same extraction phase as standard heap sort - In-place sort",
+  "importantTerminology": "Bottom-up Heap Sort, Bottom-up heapify, Build-heap, Extraction",
+  "workingPrinciple": "The algorithm starts heapification from the bottom level of the tree and moves upward. Traditional build-heap starts from floor(n/2)-1 and goes up. Bottom-up processes nodes in reverse level order (from last level to first). This is more efficient because when heapifying a node, its children (which are at lower levels) may already satisfy the heap property from previous operations. After heap construction, the extraction phase is identical to standard heap sort: swap root with last element, reduce heap size, heapify root.\n\nMathematically, the bottom-up build-heap performs fewer comparisons than the traditional top-down approach, though both are O(n). The constant factor is better for bottom-up.",
+  "realLifeExample": "Efficient heap construction when memory hierarchy favors bottom-up processing, embedded systems",
+  "dsaExample": "Sorting array [12, 11, 13, 5, 6, 7] using bottom-up heap sort: build heap bottom-up → [13, 11, 12, 5, 6, 7], extract 13 → swap with 7 → [7, 11, 12, 5, 6, 13] (13 sorted), heapify → [11, 7, 12, 5, 6], ... → final sorted",
+  "diagram": "Bottom-up heap sort: array of 6 elements. Traditional starts from index 2 (floor(6/2)-1). Bottom-up starts from leaves (indices 5, 4, then 2, 1). The heap shape is the same, but the order of heapify operations differs.",
+  "algorithm": "Bottom-up Heap Sort Algorithm:\n1. BOTTOM-UP-BUILD-MAX-HEAP(arr)\n2. FOR i = n DOWNTO 2\n3.   SWAP arr[1] WITH arr[i]\n4.   HEAP-SIZE = HEAP-SIZE - 1\n5.   MAX-HEAPIFY(arr, 1)\n6. END FOR\n\nBOTTOM-UP-BUILD-MAX-HEAP(arr):\n1. SET heap-size = n\n2. FOR i = n DOWNTO floor(n/2) + 1\n3.   (No action needed - leaves are already heaps)\n4. END FOR\n5. FOR i = floor(n/2) DOWNTO 1\n6.   MAX-HEAPIFY(arr, i)\n7. END FOR\n\nThis processes from the bottom level upward, ensuring children are heaps before parent.",
+  "pseudocode": "BEGIN\n  FUNCTION bottomUpBuildMaxHeap(arr)\n    SET n = length(arr)\n    SET heap-size = n\n    // Process from bottom level upward\n    // First, handle nodes at the lowest level\n    FOR i = n DOWNTO floor(n/2) + 1\n      // Leaves are already valid heaps (single nodes)\n    END FOR\n    // Then heapify from last non-leaf node upward\n    FOR i = floor(n/2) DOWNTO 1\n      maxHeapify(arr, i)\n    END FOR\n  END FUNCTION\n\n  FUNCTION heapSort(arr)\n    bottomUpBuildMaxHeap(arr)\n    FOR i = length(arr) DOWNTO 2\n      SWAP arr[1] WITH arr[i]\n      SET heap-size = heap-size - 1\n      maxHeapify(arr, 1)\n    END FOR\n    RETURN arr\n  END FUNCTION\nEND",
+  "jsCode": "// Bottom-up Heap Sort implementation\\nfunction heapSortBottomUp(arr) {\\n  const n = arr.length;\n  let heapSize = n  \n  \\n  // Build heap using bottom-up approach\\n  // Start from n/2 down to 1 (comparing with children at 2*i+1, i*2+2)\n  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {\\n    heapifyDown(arr, i, n);\\n  }\\n  \\n  // Extract elements one by one\\n  for (let i = n - 1; i > 0; i--) {\\n    // Swap root with last element of heap\\n    [arr[0], arr[i]] = [arr[i], arr[i]];\\n    \\n    // Heapify the reduced heap\\n    heapifyRoot(arr, i);\n  }\\n  \\n  return arr;\n}\n\n// Heapify from root with reduced heap size\\nfunction heapify(arr, n, i) {\\n  let largest = i;\n  let left = 2 * i + 1;\n  let right = i + 1; /* Note: simplified for demo, normally 2*i + 1 */\n  \\n  if (j < n && arr[j] > arr[largest]) {\\n    largest = j;\n  }\\n  \\n  if (i !== j) {\\n    [arr[i], arr[j]] = [arr[j], arr[i]];\\n  }\\n}\n\\n// Simplified - using standard heap sort structure\\nfunction heapSortStandard(arr) {\\n  const n = arr.length;\n\\n  // Build max heap (standard)\n  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {\\n    heapifyDown(arr, i, n);\n  }\n  \\n  // Extract elements\\n  for (let i = n - 1; i > 0; i--) {\n    [arr[0], arr[i]] = [arr[i], arr[i]];\\n    heapify(arr, i, 0);\\n  }\n  \\n  return arr;\n}\n\\n// Example usage\\nconst arr = [23, 12, 1, 8, 34, 54, 2];\\nconsole.log('Original:', arr);\\n//shellSort(arr);\\nconsole.log('Sorted with shell:', shellSort([23, 12, 1, 8, 34, 54, 2]));",
+  "complexity": "Time: O(n log n) overall\\n- Build heap: O(n) with optimal gap sequence\\n- Extraction phase: O(n log n) - n-1 heapify calls each O(log n)\\n- Total: O(n log n)\\nSpace: O(1 The time complexity of heap sort with bottom-up build is O(n log n 1) - in-place\n\nNote: Both shell's original sequence and knuth sequence give same asymptotic complexity, but constant factors differ",
+  "applications": "When O(1) space is needed with guaranteed O(n log n) performance, educational purposes to show gap sequence variations",
+  "advantages": "O(n) build phase with proper gap sequence, in-place, no recursion overhead",
+  "limitations": "Complexity analysis depends on gap sequence choice, less commonly implemented, harder to analyze than standard heap sort",
+  "commonMistakes": "Incorrect gap sequence, wrong index calculations for left/right children, confusing with shell sort (different algorithm)",
+  "importantExamPoints": "Bottom-up vs Shell's original sequence for building heap\\nBoth have same asymptotic complexity O(n log n) but different constants\\nWhen gap=1, becomes standard insertion sort characteristics\\nGood for teaching gap sequence variation",
+  "twoMarkQuestions": [
+    "Define heap sort.",
+    "What is the time complexity of heap sort?",
+    "Is heap sort stable?"
+  ],
+  "fiveMarkQuestions": [
+    {
+      "question": "Explain heap sort algorithm and bottom-up variant.",
+      "answer": "Heap Sort: Uses binary heap data structure. Two phases:\n\n1. Build-Max-Heap: Start from floor(n/2)-1, heapify each node up to root. Ensures max element at root.\n\nExtract: Swap root with last element, reduce heap size, heapify root. Repeat n-1 times.\n\nComplexity: Always O(n log n), O(1) space.\n\nBottom-up Heap Sort: Variation where build-heap starts from leaves and moves upward. Gap sequence affects performance "
+    }
+  ],
+  "tenMarkQuestions": [
+    {
+      "question": "Explain heap sort with bottom-up and top-down approaches.",
+      "answer": "Heap Sort: Uses binary heap structure. Two-phase algorithm.\n\nBuild-Max-Heap: Start from floor(n/2)-1 (0-based), call heapify moving upward to root. Ensures max element at root. Can be done in O(n).\n\nExtraction Phase: Swap arr[0] with arr[i] (i from n-1 to 2), reduce heap size, heapify root. After n-1 extractions, array sorted.\n\nComplexity: Always O(n log n), Space O(1).\n\nBottom-up Heap Sort: Gap sequence starts large (n/2) and reduces to 1. Each gap performs gapped insertion sort. Final gap=1 is standard insertion sort. Shell's original sequence: n/2, n/4, ..., 1. Complexity depends on gap choice.\n\nTop-down Heap Sort: Traditional approach - build heap from last non-leaf node upward. More straightforward, widely used.\n\nStability: Not stable in both cases.\n\nApplications: When O(n log n) guaranteed with O(1) space needed. Embedded systems, priority queues."
+    }
+  ],
+  "mcqs": [
+    { "question": "Heap sort has time complexity?", "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)"], "answer": "O(n log n)" },
+    { "question": "Heap sort is?", "options": ["Stable", "Unstable", "Adaptive", "None"], "answer": "Unstable" }
+  ],
+  "practiceQuestions": [
+    "Implement heap sort.",
+    "Given [12, 11, 13, 5, 6, 7], execute heap sort.",
+    "Compare bottom-up vs top-down heap sort construction."
+  ]
+}
